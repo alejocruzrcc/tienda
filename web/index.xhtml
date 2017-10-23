@@ -88,7 +88,7 @@
 
                                             <h:outputText value="Precio:" />
                                             <p:inputText value="#{productoBean.selectedProducto.precio}"></p:inputText>
-                                            <p:commandButton value="Editar" action="#{productoBean.editarPrendas()}">
+                                            <p:commandButton value="Editar" action="#{productoBean.editarPrendas(productoBean.selectedProducto)}">
                                                
                                             </p:commandButton>
                                         </p:panelGrid>

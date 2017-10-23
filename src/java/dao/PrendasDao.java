@@ -137,16 +137,17 @@ public class PrendasDao {
         try {
             connection = dB.getConnection();
             
-                String query = "UPDATE public.prendas\n"
-                        + "	SET nombre=?, marca=?, talla=?, precio=?\n"
-                        + "	WHERE prenda_id= "+ prendas.getId()+";";
+                String query = "UPDATE public.prendas \n"
+                        + "	SET nombre=?, marca=?, talla=?, precio=? \n"
+                        + "	WHERE prenda_id = ?;";
                 
                 statement.setString(1, prendas.getNombre());
                 statement.setString(2, prendas.getMarca());
                 statement.setString(3, prendas.getTalla());
                 statement.setDouble(4, prendas.getPrecio());
+                statement.setInt(5, prendas.getId());
                 statement.execute();
-                connection.commit();
+                //  connection.commit();
                 registro = true;
             
             if (!connection.isClosed()) {

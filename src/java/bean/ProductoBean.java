@@ -80,9 +80,9 @@ public class ProductoBean {
         cargarPrendas();
     }
      
-    public void editarPrendas() {
+    public void editarPrendas(Producto selectedProducto) {
                
-        logicaPrendas.editarPrendas(producto);
+        logicaPrendas.editarPrendas(selectedProducto);
         listProductos.clear();
         cargarPrendas();
     }
