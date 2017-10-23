@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"></link>
+    </h:head>
+    <h:body>
+        <div class="container">
+            <p:panel id="panel_principal">
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <h4>Tienda Virtual de Ropa</h4>
+                        <br></br>
+                    </div>
+                </div>
+                
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6>Ingrese aquí las prendas:</h6>
+                            <h:form>
+                                <p:panelGrid columns="1" class="text-center">
+                                <p:inputText  placeholder="Id" value="#{productoBean.producto.id}" ></p:inputText>
+                                <p:inputText  placeholder="Nombre" value="#{productoBean.producto.nombre}"></p:inputText>
+                                <p:inputText  placeholder="Marca" value="#{productoBean.producto.marca}"></p:inputText>
+                                <p:inputText  placeholder="Talla" value="#{productoBean.producto.talla}"></p:inputText>
+                                <p:inputText  placeholder="Precio" value="#{productoBean.producto.precio}"></p:inputText>                                
+                            </p:panelGrid>
+                            
+                            
+                            <br></br>
+                            <p:commandButton value="Registrar" action="#{productoBean.registrarPrenda()}" update=":formTabla:tablaProducto"></p:commandButton>
+                            <p:commandButton value="Reset" action="#{productoBean.resetLista()}"  update=":formTabla:tablaProducto"></p:commandButton>
+                            </h:form>
+                            <br></br>                   
+                        </div>
+                        <div class="col-md-8">
+                            <h6>Listado de prendas de la tienda</h6>
+                            <p:growl id="growl" showDetail="true" sticky="false" />
+                            <h:form id="formTabla">
+                            <p:dataTable id="tablaProducto" var="prod" emptyMessage="No se hay prendas registradas"
+                                         value="#{productoBean.listProductos}"
+                                         selection="#{productoBean.listProductoSelect}"
+                                         rowKey="#{prod.id}">
+                                <p:column selectionMode="multiple" style="width:50px;text-align:center"/>
+                                <p:column headerText="Id">
+                                    <h:outputLabel value="#{prod.id}"></h:outputLabel>
+                                </p:column>
+                                <p:column headerText="Nombre">
+                                    <h:outputLabel value="#{prod.nombre}"></h:outputLabel>
+                                </p:column>
+                                <p:column headerText="Marca">
+                                    <h:outputLabel value="#{prod.marca}"></h:outputLabel>
+                                </p:column>
+                                <p:column headerText="Talla">
+                                    <h:outputLabel  value="#{prod.talla}"></h:outputLabel>
+                                </p:column>
+                                <p:column headerText="Precio">
+                                    <h:outputLabel value="#{prod.precio}"></h:outputLabel>
+                                </p:column>
+                                <p:column headerText="Editar" style="width:70px;text-align: center">
+                                    <p:commandButton update=":editPrendaForm:editPrenda" oncomplete="PF('editPrenda').show()" icon="ui-icon-search" title="View">
+                                        <f:setPropertyActionListener value="#{prod}" target="#{productoBean.selectedProducto}" />
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                            </h:form>
+                            <h:form id="editPrendaForm">
+                                <p:dialog header="Editar Prenda" widgetVar="editPrenda" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                                    <p:outputPanel id="editPrenda" style="text-align:center;">
+                                        <p:panelGrid  columns="2" rendered="#{not empty productoBean.selectedProducto}" columnClasses="label,value">
+
+                                            <h:outputText value="Id:" />
+                                            <p:inputText value="#{productoBean.selectedProducto.id}"></p:inputText>
+
+                                            <h:outputText value="Nombre" />
+                                            <p:inputText value="#{productoBean.selectedProducto.nombre}"></p:inputText>
+
+                                            <h:outputText value="Marca:" />
+                                            <p:inputText value="#{productoBean.selectedProducto.marca}"></p:inputText>
+
+                                            <h:outputText value="Talla:" />
+                                            <p:inputText value="#{productoBean.selectedProducto.talla}"></p:inputText>
+
+                                            <h:outputText value="Precio:" />
+                                            <p:inputText value="#{productoBean.selectedProducto.precio}"></p:inputText>
+                                            <p:commandButton value="Editar" action="#{productoBean.editarPrendas()}">
+                                               
+                                            </p:commandButton>
+                                        </p:panelGrid>
+                                    </p:outputPanel>
+                                </p:dialog>
+                            </h:form>
+                            
+                            <p:commandButton value="elimnar" action="#{productoBean.eliminarEstudiantes()}" update=":formTabla:tablaProducto, growl"></p:commandButton>
+                            
+                        </div>
+                    </div>
+                
+
+            </p:panel>
+
+        </div>
+
+
+        <br />
+
+    </h:body>
+</html>
+
